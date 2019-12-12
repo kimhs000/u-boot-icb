@@ -1,0 +1,12 @@
+if TARGET_MX6ICB
+
+config SYS_BOARD
+	default "mx6icb"
+
+config SYS_VENDOR
+	default "naimtechnology"
+
+config SYS_CONFIG_NAME
+	default "mx6icb"
+
+endif

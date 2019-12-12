@@ -321,6 +321,16 @@ config TARGET_MX6SABRESD
 	select SUPPORT_SPL
 	imply CMD_DM
 
+config TARGET_MX6ICB
+	bool "mx6icb"
+	select BOARD_EARLY_INIT_F
+	select BOARD_LATE_INIT
+	select DM
+	select DM_THERMAL
+	select MX6QDL
+	select SUPPORT_SPL
+	imply CMD_DM
+
 config TARGET_MX6SLEVK
 	bool "mx6slevk"
 	select MX6SL
@@ -596,6 +606,7 @@ source "board/freescale/mx6sxsabresd/Kconfig"
 source "board/freescale/mx6sxsabreauto/Kconfig"
 source "board/freescale/mx6ul_14x14_evk/Kconfig"
 source "board/freescale/mx6ullevk/Kconfig"
+source "board/naimtechnology/mx6icb/Kconfig"
 source "board/grinn/liteboard/Kconfig"
 source "board/phytec/pcm058/Kconfig"
 source "board/phytec/pfla02/Kconfig"

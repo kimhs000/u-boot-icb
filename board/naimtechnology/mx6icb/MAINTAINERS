@@ -1,0 +1,6 @@
+MX6ICB BOARD
+M:	Hyuksoo Kim <kimhs@naimtechnology.com>
+S:	Maintained
+F:	board/naimtechnology/mx6icb/
+F:	include/configs/mx6icb.h
+F:	configs/mx6icb_defconfig
