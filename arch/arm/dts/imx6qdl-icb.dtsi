@@ -25,7 +25,7 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		reg_usb_otg_vbus: regulator@0 {
+/*		reg_usb_otg_vbus: regulator@0 {
 			compatible = "regulator-fixed";
 			reg = <0>;
 			regulator-name = "usb_otg_vbus";
@@ -65,7 +65,7 @@
 			regulator-max-microvolt = <3300000>;
 			gpio = <&gpio3 19 0>;
 			enable-active-high;
-		};
+		};*/
 	};
 
 	gpio-keys {
@@ -119,7 +119,7 @@
 		default-brightness-level = <7>;
 		status = "okay";
 	};
-
+/*
 	leds {
 		compatible = "gpio-leds";
 		pinctrl-names = "default";
@@ -130,7 +130,7 @@
 			default-state = "on";
 		};
 	};
-
+*/
 	panel {
 		compatible = "hannstar,hsd100pxn1";
 		backlight = <&backlight_lvds>;
@@ -160,8 +160,8 @@
 };
 
 &mipi_csi {
-	status = "okay";
-
+	status = "disabled";
+/*
 	port@0 {
 		reg = <0>;
 
@@ -170,13 +170,13 @@
 			clock-lanes = <0>;
 			data-lanes = <1 2>;
 		};
-	};
+	};*/
 };
 
 &audmux {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_audmux>;
-	status = "okay";
+//	pinctrl-0 = <&pinctrl_audmux>;
+	status = "disabled";
 };
 
 &clks {
@@ -192,13 +192,13 @@
 	pinctrl-0 = <&pinctrl_ecspi1>;
 	status = "okay";
 
-	flash: m25p80@0 {
+/*	flash: m25p80@0 {
 		#address-cells = <1>;
 		#size-cells = <1>;
 		compatible = "st,m25p32", "jedec,spi-nor";
 		spi-max-frequency = <20000000>;
 		reg = <0>;
-	};
+	};*/
 };
 
 &fec {
@@ -222,7 +222,7 @@
 	pinctrl-0 = <&pinctrl_i2c1>;
 	status = "okay";
 
-	codec: wm8962@1a {
+/*	codec: wm8962@1a {
 		compatible = "wlf,wm8962";
 		reg = <0x1a>;
 		clocks = <&clks IMX6QDL_CLK_CKO>;
@@ -235,39 +235,16 @@
 		SPKVDD1-supply = <&reg_audio>;
 		SPKVDD2-supply = <&reg_audio>;
 		gpio-cfg = <
-			0x0000 /* 0:Default */
-			0x0000 /* 1:Default */
-			0x0013 /* 2:FN_DMICCLK */
-			0x0000 /* 3:Default */
-			0x8014 /* 4:FN_DMICCDAT */
-			0x0000 /* 5:Default */
+			0x0000 // 0:Default //
+			0x0000 // 1:Default //
+			0x0013 // 2:FN_DMICCLK //
+			0x0000 // 3:Default //
+			0x8014 // 4:FN_DMICCDAT //
+			0x0000 // 5:Default //
 		>;
-	};
+	};*/
 
-	ov5642: camera@3c {
-		compatible = "ovti,ov5642";
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_ov5642>;
-		clocks = <&clks IMX6QDL_CLK_CKO>;
-		clock-names = "xclk";
-		reg = <0x3c>;
-		DOVDD-supply = <&vgen4_reg>; /* 1.8v */
-		AVDD-supply = <&vgen3_reg>;  /* 2.8v, rev C board is VGEN3
-						rev B board is VGEN5 */
-		DVDD-supply = <&vgen2_reg>;  /* 1.5v*/
-		powerdown-gpios = <&gpio1 16 GPIO_ACTIVE_HIGH>;
-		reset-gpios = <&gpio1 17 GPIO_ACTIVE_LOW>;
-		status = "disabled";
-
-		port {
-			ov5642_to_ipu1_csi0_mux: endpoint {
-				remote-endpoint = <&ipu1_csi0_mux_from_parallel_sensor>;
-				bus-width = <8>;
-				hsync-active = <1>;
-				vsync-active = <1>;
-			};
-		};
-	};
+	
 };
 
 &i2c2 {
@@ -276,25 +253,22 @@
 	pinctrl-0 = <&pinctrl_i2c2>;
 	status = "okay";
 
-	ov5640: camera@3c {
-		compatible = "ovti,ov5640";
+	ov5642: camera@3c {
+		compatible = "ovti,ov5642";
 		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_ov5640>;
-		reg = <0x3c>;
 		clocks = <&clks IMX6QDL_CLK_CKO>;
 		clock-names = "xclk";
-		DOVDD-supply = <&vgen4_reg>; /* 1.8v */
-		AVDD-supply = <&vgen3_reg>;  /* 2.8v, rev C board is VGEN3
-						rev B board is VGEN5 */
-		DVDD-supply = <&vgen2_reg>;  /* 1.5v*/
-		powerdown-gpios = <&gpio1 19 GPIO_ACTIVE_HIGH>;
-		reset-gpios = <&gpio1 20 GPIO_ACTIVE_LOW>;
+		reg = <0x3c>;
+/*		powerdown-gpios = <&gpio1 16 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&gpio1 17 GPIO_ACTIVE_LOW>;*/
+		status = "disabled";
 
 		port {
-			ov5640_to_mipi_csi2: endpoint {
-				remote-endpoint = <&mipi_csi2_in>;
-				clock-lanes = <0>;
-				data-lanes = <1 2>;
+			ov5642_to_ipu1_csi0_mux: endpoint {
+				remote-endpoint = <&ipu1_csi0_mux_from_parallel_sensor>;
+				bus-width = <8>;
+				hsync-active = <1>;
+				vsync-active = <1>;
 			};
 		};
 	};
@@ -407,13 +381,13 @@
 	pinctrl-0 = <&pinctrl_i2c3>;
 	status = "okay";
 
-	egalax_ts@4 {
+/*	egalax_ts@4 {
 		compatible = "eeti,egalax_ts";
 		reg = <0x04>;
 		interrupt-parent = <&gpio6>;
 		interrupts = <7 2>;
 		wakeup-gpios = <&gpio6 7 0>;
-	};
+	};*/
 };
 
 &iomuxc {
@@ -429,27 +403,27 @@
 				MX6QDL_PAD_NANDF_D3__GPIO2_IO03 0x1b0b0
 				MX6QDL_PAD_GPIO_0__CCM_CLKO1    0x130b0
 				MX6QDL_PAD_NANDF_CLE__GPIO6_IO07 0x1b0b0
-				MX6QDL_PAD_ENET_TXD1__GPIO1_IO29 0x1b0b0
-				MX6QDL_PAD_EIM_D22__GPIO3_IO22  0x1b0b0
+//				MX6QDL_PAD_ENET_TXD1__GPIO1_IO29 0x1b0b0
+//				MX6QDL_PAD_EIM_D22__GPIO3_IO22  0x1b0b0
 				MX6QDL_PAD_ENET_CRS_DV__GPIO1_IO25 0x1b0b0
 			>;
 		};
 
-		pinctrl_audmux: audmuxgrp {
+/*		pinctrl_audmux: audmuxgrp {
 			fsl,pins = <
 				MX6QDL_PAD_CSI0_DAT7__AUD3_RXD		0x130b0
 				MX6QDL_PAD_CSI0_DAT4__AUD3_TXC		0x130b0
 				MX6QDL_PAD_CSI0_DAT5__AUD3_TXD		0x110b0
 				MX6QDL_PAD_CSI0_DAT6__AUD3_TXFS		0x130b0
 			>;
-		};
+		};*/
 
 		pinctrl_ecspi1: ecspi1grp {
 			fsl,pins = <
-				MX6QDL_PAD_KEY_COL1__ECSPI1_MISO	0x100b1
-				MX6QDL_PAD_KEY_ROW0__ECSPI1_MOSI	0x100b1
-				MX6QDL_PAD_KEY_COL0__ECSPI1_SCLK	0x100b1
-				MX6QDL_PAD_KEY_ROW1__GPIO4_IO09		0x1b0b0
+				MX6QDL_PAD_EIM_D17__ECSPI1_MISO		0x100b1
+				MX6QDL_PAD_EIM_D18__ECSPI1_MOSI		0x100b1
+				MX6QDL_PAD_EIM_D16__ECSPI1_SCLK		0x100b1
+				MX6QDL_PAD_EIM_EB2__GPIO2_IO30		0x1b0b0
 			>;
 		};
 
@@ -490,8 +464,8 @@
 
 		pinctrl_i2c1: i2c1grp {
 			fsl,pins = <
-				MX6QDL_PAD_CSI0_DAT8__I2C1_SDA		0x4001b8b1
-				MX6QDL_PAD_CSI0_DAT9__I2C1_SCL		0x4001b8b1
+				MX6QDL_PAD_EIM_D21__I2C1_SCL		0x4001b8b1
+				MX6QDL_PAD_EIM_D28__I2C1_SDA		0x4001b8b1
 			>;
 		};
 
@@ -525,19 +499,6 @@
 			>;
 		};
 
-		pinctrl_ov5640: ov5640grp {
-			fsl,pins = <
-				MX6QDL_PAD_SD1_DAT2__GPIO1_IO19 0x1b0b0
-				MX6QDL_PAD_SD1_CLK__GPIO1_IO20  0x1b0b0
-			>;
-		};
-
-		pinctrl_ov5642: ov5642grp {
-			fsl,pins = <
-				MX6QDL_PAD_SD1_DAT0__GPIO1_IO16 0x1b0b0
-				MX6QDL_PAD_SD1_DAT1__GPIO1_IO17 0x1b0b0
-			>;
-		};
 
 		pinctrl_pcie: pciegrp {
 			fsl,pins = <
@@ -633,10 +594,10 @@
 
 &pcie {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_pcie>;
-	reset-gpio = <&gpio7 12 GPIO_ACTIVE_LOW>;
-	vpcie-supply = <&reg_pcie>;
-	status = "okay";
+//	pinctrl-0 = <&pinctrl_pcie>;
+//	reset-gpio = <&gpio7 12 GPIO_ACTIVE_LOW>;
+//	vpcie-supply = <&reg_pcie>;
+	status = "disabled";
 };
 
 &pwm1 {
@@ -672,12 +633,10 @@
 };
 
 &usbh1 {
-	vbus-supply = <&reg_usb_h1_vbus>;
 	status = "okay";
 };
 
 &usbotg {
-	vbus-supply = <&reg_usb_otg_vbus>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usbotg>;
 	disable-over-current;
